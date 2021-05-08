@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:padding="10sp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="@drawable/subdialog"
+
+    >
+    <TextView
+        android:id="@+id/subInterestHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sf_pro"
+        android:text="Good. Now what do you like in "
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.022" />
+
+    <GridView
+        android:id="@+id/subGrid"
+        android:padding="30sp"
+        android:verticalSpacing="20sp"
+        android:horizontalSpacing="30sp"
+        android:layout_width="match_parent"
+        android:layout_height="500sp"
+        android:numColumns="auto_fit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subInterestHeading"
+        app:layout_constraintVertical_bias="0.353" />
+
+    <Button
+        android:id="@+id/subButtonOK"
+        android:layout_width="120sp"
+        android:layout_height="50sp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/sub_interest_ok_btn"
+        android:fontFamily="@font/sf_pro"
+        android:text="OK"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subGrid" />
+
+    <Button
+        android:id="@+id/subButtonCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:width="120sp"
+        android:fontFamily="@font/sf_pro"
+        android:height="50sp"
+        android:background="@drawable/sub_interest_cancel_button"
+        android:text="Cancel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subGrid" />
+</androidx.constraintlayout.widget.ConstraintLayout>
