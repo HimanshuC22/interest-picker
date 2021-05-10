@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
@@ -20,14 +19,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<String> interestList;
@@ -83,6 +76,13 @@ public class MainActivity extends AppCompatActivity {
         {
             isSelected[i] = false;
         }
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     int id, mainPos;
@@ -91,12 +91,11 @@ public class MainActivity extends AppCompatActivity {
     Dialog subinterestDialog;
     ConstraintLayout viewContainer;
     CardView cardView;
+
+    TextView selectedTextView;
+    CardView selectedCard;
     RecyclerView recyclerView;
     GridLayoutManager gridLayoutManager;
-    public void TEST(String s)
-    {
-        Log.d("FUNCTIONCALL", s);
-    }
     public void onClickMainInterest(View view)
     {
         String idString = getResources().getResourceName(view.getId()).toString();
@@ -144,35 +143,49 @@ public class MainActivity extends AppCompatActivity {
         subIsSelected = new boolean[subMultiArray[mainPos].length];
         for(int i = 0; i<subMultiArray[mainPos].length; i++) subIsSelected[i] = false;
         subList = new ArrayList<>();
-        int position = getIntent().getIntExtra("POSITION", 0);
-
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectedTextView = view.findViewById(R.id.mainText);
+                selectedCard = view.findViewById(R.id.mainCardView);
                 if(!subIsSelected[position])
                 {
                     view.findViewById(R.id.mainCardView).setElevation(0);
-                    view.findViewById(R.id.mainCardView).setBackground(getDrawable(R.drawable.subinterest_btn_clicked));
+                    view.findViewById(R.id.main_constraint_layout).setBackground(getDrawable(R.drawable.subinterest_btn_clicked));
                     Log.d("CLICKED", subMultiArray[mainPos][position]);
                     subList.add(subMultiArray[mainPos][position]);
                     subIsSelected[position] = true;
 
                 }
                 else{
-                    view.findViewById(R.id.mainCardView).setElevation(0);
-                    view.findViewById(R.id.mainCardView).setBackground(getDrawable(R.drawable.subinterest_btn_unclicked));
+                    DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+                    view.findViewById(R.id.mainCardView).setElevation(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 5, metrics));
+                    view.findViewById(R.id.main_constraint_layout).setBackground(getDrawable(R.drawable.subinterest_btn_unclicked));
                     view.setBackground((getDrawable(R.drawable.main_unclicked)));
                     if(!subList.isEmpty()) subList.remove(subMultiArray[mainPos][position]);
                     subIsSelected[position] = false;
                 }
             }
         });
-        if(!INTEREST_FINAL[id-1].isEmpty())
+        if(!INTEREST_FINAL[mainPos].isEmpty())
         {
             INTEREST_FINAL[id-1].clear();
             subList.clear();
             for(int i = 0; i<subIsSelected.length; i++) subIsSelected[i]=false;
             isSelected[id] = false ;
+            //subList.clear();
+
+            /*for(int i = 0; i<INTEREST_FINAL[mainPos].size(); i++)
+            {
+                subIsSelected[i] = false;
+                if(INTEREST_FINAL[mainPos].get(i)== selectedTextView.getText().toString())
+                {
+
+                    selectedCard.setBackground(getDrawable(R.drawable.subinterest_btn_clicked));
+                    subList.add(subMultiArray[mainPos][i]);
+                    subIsSelected[i] = true;
+                }
+            }*/
         }
         OK.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
                 subinterestDialog.dismiss();
                 subList.clear();
                 for(int i = 0; i<subIsSelected.length; i++) subIsSelected[i]=false;
+                viewContainer.setBackground(getDrawable(R.drawable.main_unclicked));
                 isSelected[id] = false ;
             }
         });
